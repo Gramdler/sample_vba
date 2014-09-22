@@ -1,0 +1,66 @@
+' Программа перебора и форматирования строк в эксель, по прынцыпу пока все не отработаются. (на практике - очень удобно, поставил и пошел книгу читать :) если их очень много от 22 к строк...).
+
+Function SearchFor(i) As Integer ' Function for search empty cell.
+If i > 0 Then ' Checking on empty cell. To understand where to look for empty cells, if + i in the current row, -і in the previous row.
+Do While ActiveCell.Offset(0, i).Value <> Empty ' Search empty cell in current row.
+   i = i + 1 ' Counter for search need column's number
+   Loop
+Else
+i = (i * -1) ' Return i in +, search empty cell in previous row.
+Do While ActiveCell.Offset(-1, i).Value <> Empty 
+   i = i + 1
+   Loop
+End If
+SearchFor = i
+i = 8  ' Resets the variable to the line number from which to start the search.
+End Function
+
+Sub DelString() ' Procedure for delete lines
+
+If ActiveCell.Offset(0, 0).Value = Empty Then
+   ActiveCell.Rows("1:1").EntireRow.Select ' delete current line
+   Selection.Delete Shift:=xlUp ' and translation next line
+   ActiveCell.Offset(0, 0).Select
+ElseIf ActiveCell.Offset(1, 1).Value = Empty Then
+   ActiveCell.Offset(1, 0).Select ' translation next line
+   ActiveCell.Rows("1:1").EntireRow.Select ' delete current line
+   Selection.Delete Shift:=xlUp ' translation next line
+   ActiveCell.Offset(0, 0).Select
+Else
+   ActiveCell.Offset(1, 0).Select ' translation next line
+  End If
+End Sub
+
+
+
+Sub Macross1()
+'
+'Makros for redacting table
+'
+'
+
+Dim B As String  ' for copy data
+Dim i As Integer ' count for cows  in table
+
+
+i = 8 ' First empty cell (on column).
+  Do While ActiveCell.Row <= ActiveSheet.UsedRange.Rows.Count ' Checking on last row.
+          
+        If ActiveCell.Offset(0, 0).Value = Emtpy Then ' If first cell - empty, then select 7 cell (on column).
+            B = CStr(ActiveCell.Offset(0, 6).Value) ' assigns the value of variable B
+            ActiveCell.Offset(-1, SearchFor(-i)).Value = B ' Insert a value into a cell in the upper-cell column on this line, so -i.
+              GoTo SS 'Suspend the execution of the following checks.
+              End If
+            If ActiveCell.Offset(1, 6).Value = Empty Then ' If the seventh cell in the bottom row is empty, then end.
+            ElseIf ActiveCell.Offset(1, 1).Value = Empty Then ' other
+            B = CStr(ActiveCell.Offset(1, 6).Value) ' assigns the value of variable B
+            ActiveCell.Offset(0, SearchFor(i)).Value = B ' Insert a value into a cell by i column in the current row.
+SS:      ' On this translation, paste supsend.
+            End If
+
+    Call DelString
+   
+   Loop
+
+'
+End Sub
