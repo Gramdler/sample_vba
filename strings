@@ -1,0 +1,18 @@
+y1 = 1
+Probel = " "
+
+y = InStr(y1, B, Probel, vbBinaryCompare)
+
+Day = Mid(B, y1, (y - 1))
+
+y1 = y + 1
+
+y = InStr(y1, B, Probel, vbBinaryCompare)
+
+Month0 = Mid(B, y1, (y - 1))
+
+y1 = y + 1
+
+y = InStr(y1, B, Probel, vbBinaryCompare)
+
+Year = Mid(B, y1, (y - 1))
