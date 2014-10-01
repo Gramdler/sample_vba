@@ -16,3 +16,6 @@ y1 = y + 1
 y = InStr(y1, B, Probel, vbBinaryCompare)
 
 Year = Mid(B, y1, (y - 1))
+
+    B = ""
+    B = Day + "." + Month0 + "." + Year
