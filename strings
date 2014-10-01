@@ -1,21 +1,92 @@
+Sub Translate_in_Date()
+'
+' 
+' 
+
+
+'
+  Dim B As String  
+  Dim Day As String
+  Dim Month0 As String
+  Dim Month As String
+  Dim Year As String
+
+  Dim Probel As String
+  Dim y, y1, y2, y3 As Integer
+
+  
+  
+    Do While ActiveCell.Row <= ActiveSheet.UsedRange.Rows.Count 
+          
+      B = CStr(ActiveCell.Offset(0, 1).Value)
+
+
+
 y1 = 1
 Probel = " "
+If Len(B) > 0 Then
 
 y = InStr(y1, B, Probel, vbBinaryCompare)
 
 Day = Mid(B, y1, (y - 1))
 
 y1 = y + 1
+y2 = y + 1
 
 y = InStr(y1, B, Probel, vbBinaryCompare)
 
-Month0 = Mid(B, y1, (y - 1))
+Month0 = Mid(B, y1, (y - y2))
 
 y1 = y + 1
+y3 = y + 1
 
 y = InStr(y1, B, Probel, vbBinaryCompare)
 
-Year = Mid(B, y1, (y - 1))
+Year = Mid(B, y1, (y - y3))
 
+    Select Case Month0
+        Case "января"
+            Month = "1"
+        Case "февраля"
+            Month = "2"
+        Case "марта"
+            Month = "3"
+        Case "апреля"
+            Month = "4"
+        Case "мая"
+            Month = "5"
+        Case "июня"
+            Month = "6"
+        Case "июля"
+            Month = "7"
+        Case "августа"
+            Month = "8"
+        Case "сентября"
+            Month = "9"
+        Case "октября"
+            Month = "10"
+        Case "ноября"
+            Month = "11"
+        Case "декабря"
+            Month = "12"
+        Case Else
+            Month = "Ошибка. Поправь название месяца в списке вариантов, внутри макроса."
+    End Select
+ 
     B = ""
-    B = Day + "." + Month0 + "." + Year
+    B = Month + "/" + Day + "/" + Year
+    
+    ActiveCell.Offset(0, 0).Value = B
+    Selection.NumberFormat = "m/d/yyyy"
+ Else
+ 
+ End If
+    
+    ActiveCell.Offset(1, 0).Select
+ 
+    
+    Loop
+    
+    
+    
+End Sub
